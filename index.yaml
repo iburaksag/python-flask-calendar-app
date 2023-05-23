@@ -1,0 +1,17 @@
+indexes:
+- kind: CalendarInfo
+  properties:
+  - name: id
+  - name: name
+
+- kind: EventInfo
+  properties:
+  - name: id
+  - name: eventDate
+  - name: notes
+
+- kind: CalendarEventInfo
+  properties:
+  - name: id
+  - name: calendar
+  - name: event

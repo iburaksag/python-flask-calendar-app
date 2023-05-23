@@ -1,0 +1,81 @@
+body {
+  font-family: 'Ubuntu', sans-serif;
+  text-align: center;
+  background-color: whitesmoke;
+}
+
+
+/*NAVIGATION BAR*/
+.navbar {
+    background: #855FF6;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem!important;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.nav-brand > img {
+  width: 153px;
+  height: 86px;
+}
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin-top: 16px!important;
+}
+
+.nav-item:not(:first-of-type) {
+    margin-left: 1.5em;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.nav-btn {
+    height: fit-content;
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/*Index*/
+
+.sectionHead {
+  display: flex;
+}
+
+.previousWeekBtn {
+  display: flex;
+  flex:0.2;
+}
+
+.calendarTitle {
+  flex: 0.6;
+  justify-content: center;
+}
+
+.nextWeekBtn {
+  display: flex;
+  flex: 0.2;
+  justify-content: flex-end;
+}
+
+.eventTitle {
+  font-weight: 700;
+}
+
+.share_inp {
+  background-color: transparent;
+  pointer-events: none;
+  border: none;
+  text-align: center;
+}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+  <title>Calendar App</title>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/bootstrap/css/bootstrap.min.css') }}">
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
+</head>
+<body>
+
+<div class="container">
+  <nav class="navbar">
+      <ul class="nav-links">
+          <li class="nav-item">
+              <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+              <a href="/chooseCalendar" class="nav-link">Calendar</a>
+          </li>
+          <li class="nav-item">
+              <a href="/share_calendar" class="nav-link">Share</a>
+          </li>
+      </ul>
+      {% if user_info %}
+      <span class="nav-link"><u>Logged User: {{ user_info['email'] }}</u></span>
+      <button id="sign-out" class="btn btn-danger" hidden="true">Sign out</button>
+      {% else %}
+        <span class="nav-link"></span>
+        <button id="sign-out" class="btn btn-danger" hidden="true">Sign out</button>
+      {% endif %}
+  </nav>
+
+    <div class="container">
+      <div class="wholeWeek">
+        <div class="sectionHead mt-4">
+          <div class="previousWeekBtn">
+            <form class="" action="/calendar/{{ calendarId }}/{{ weekCount|int - 1 }}" method="post">
+              <button class="btn btn-info" type="submit" name="previousWeek">Previous Week</button>
+            </form>
+          </div>
+          <div class="calendarTitle">
+            <a href="/add_calendar" class="btn btn-success d-inline-block w-25 mx-auto"> Add Calendar</a>
+            <a href="/calendar_info/{{ calendarId }}" class="btn btn-warning d-inline-block w-25 mx-auto"> Edit Calendar</a>
+            <label class="lblTitle d-block  mt-3">Calendar Name : {{ calendarName }}</label>
+
+          </div>
+            <div class="nextWeekBtn">
+              <form class="" action="/calendar/{{ calendarId }}/{{ weekCount|int + 1 }}" method="post">
+                <button class="btn btn-info" type="submit" name="nextWeek">Next Week</button>
+              </form>
+            </div>
+        </div>
+
+        <div class="sectionBody mt-3">
+          {% for date, day in dates.items() %}
+          <div class="card text-center mb-3 w-75 mx-auto">
+            <div class="card-header d-flex" style="justify-content: space-between;">
+                <h5 class="card-title d-flex align-items-center"> {{ date }}</h5>
+                <label class="d-flex align-items-center"><b>{{ day }}</b></label>
+                <a href="#" class="btn btn-success d-flex" onclick="window.location.href='{{ url_for ( 'add_event' , calendarId = calendarId, date = date ) }}'">Add Event</a>
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <h6 class="mb-4"><b>Scheduled Events</b></h6>
+                <ul class="list-group">
+                    {% for event in eventList %}
+                      {% if event['eventDate'] == date %}
+                        {% if event['clashesWith'] %}
+                          <li class="list-group-item" style="background-color:orange;"><a href="#" onclick="window.location.href='{{ url_for ( 'event_info', calendarId = calendarId, eventId = event.id ) }}'"><b>{{ event.startTime}}</b> - <b>{{ event.endTime}}</b> -> {{ event.name }}</a></li>
+                        {% else %}
+                          <li class="list-group-item"><a href="#" onclick="window.location.href='{{ url_for ( 'event_info', calendarId = calendarId, eventId = event.id ) }}'"><b>{{ event.startTime}}</b> - <b>{{ event.endTime}}</b> -> {{ event.name }}</a></li>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                </ul>
+              </p>
+            </div>
+            <div class="card-footer text-body-secondary"></div>
+          </div>
+          {% endfor%}
+
+        </div>
+      </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+<script src="{{ url_for('static', filename='app-setup.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='/bootstrap/js/bootstrap-min.js') }}"></script>
+
+</body>
+</html>

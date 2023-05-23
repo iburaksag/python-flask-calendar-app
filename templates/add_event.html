@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <title>Adding an event</title>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/bootstrap/css/bootstrap.min.css') }}">
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
+</head>
+<body>
+
+<div class="container">
+  <nav class="navbar">
+      <ul class="nav-links">
+          <li class="nav-item">
+              <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+              <a href="/chooseCalendar" class="nav-link">Calendar</a>
+          </li>
+          <li class="nav-item">
+              <a href="/share_calendar" class="nav-link">Share</a>
+          </li>
+      </ul>
+      {% if user_info %}
+      <span class="nav-link"><u>Logged User: {{ user_info['email'] }}</u></span>
+      <button id="sign-out" class="btn btn-danger" hidden="true">Sign out</button>
+      {% else %}
+        <span class="nav-link"></span>
+        <button id="sign-out" class="btn btn-danger" hidden="true">Sign out</button>
+      {% endif %}
+  </nav>
+
+    <div class="container">
+      <!--Calendar ID = {{ calendar.id }}-->
+
+        <h4 class="mt-3">Calendar Name : <span class="eventTitle">{{ calendar.name }}</span> Calendar</h4>
+          <h4 class="mb-3 mt-3">Event Date : <span class="eventTitle">{{ date }}</span></h4>
+
+        <form action="/add_event/{{ calendar.id }}/{{ date }}" class="addEventForm w-50 mx-auto" method="POST" id="addEventForm">
+           <div class="formInput form-outline mb-4">
+             <label class="form-label" for="name">Event Name </label>
+             <input type="text" name="name" id="name" class="form-control" required />
+           </div>
+
+           <div class="formInput form-outline w-50 mx-auto mb-4">
+              <label for="event_start" style="width:100%;">Start Time</label>
+              <select class="form-control" name="event_start" id="event_start">
+                {% for hour in hours %}
+                  <option value="{{ hour }}">{{ hour }}</option>
+                {% endfor %}
+              </select>
+           </div>
+
+           <div class="formInput form-outline w-50 mx-auto mb-4">
+              <label for="event_end" style="width:100%;">End Time</label>
+              <select class="form-control" name="event_end" id="event_end">
+                {% for hour in hours %}
+                  <option value="{{ hour }}">{{ hour }}</option>
+                {% endfor %}
+              </select>
+           </div>
+
+           <div class="formInput form-outline mb-4">
+             <label class="form-label" for="notes">Notes </label>
+             <textarea form ="addEventForm" class="form-control" name="notes" cols="30" wrap="soft"></textarea>
+           </div>
+
+           <button type="submit" class="btn btn-success btn-block mx-auto w-50">Add Event</button>
+       </form>
+      </div>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+<script src="{{ url_for('static', filename='app-setup.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='/bootstrap/js/bootstrap-min.js') }}"></script>
+
+</body>
+</html>
