@@ -1,6 +1,6 @@
 # Python Flask Calendar App
 In this assignment I built a calendar application that will be capable of storing events for a user on any given day. It will also be possible to share events with other users. It should be possible for a user to schedule events in any given day. If an event is to be shared with multiple users it should be possible to find a common free time on their shared calendars to prevent overlap.
-This assignment required me to use a many to many relationship between calendars and events. A calendar can only belong to one user but can be shared amongst users. An event can belong to one or more calendars.
+This assignment required me to use a many to many relationship between calendars and events. A calendar can only belong to one user but can be shared amongst users. An event can belong to one or more calendars. Please check the Assignment folder for more details.
 
 ## Available Scripts
 
